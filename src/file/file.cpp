@@ -7,3 +7,12 @@
 bool file::isFile() {
     return false;
 }
+
+file::file() {
+
+}
+
+file::file(fs::path _path) : _path(_path) {
+
+}
+
