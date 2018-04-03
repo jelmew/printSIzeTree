@@ -45,9 +45,28 @@ uintmax_t directory::get_size() {
     return size;
 }
 
+// Driver function to sort the vector elements
+// by second element of pairs
+bool sortbysec(const std::pair<file, uintmax_t> &a,
+               const std::pair<file, uintmax_t> &b) {
+    return (a.second < b.second);
+}
+
 void directory::print_size_of_files(bool sorted) {
-    for (const file &file1: _files) {
-        std::cout << "File: " << file1.name() << " size: " << file1.size() << std::endl;
+    if (sorted) {
+        std::vector<std::pair<file, uintmax_t >> files_and_respective_sizes;
+        for (const file &file1: _files) {
+            files_and_respective_sizes.push_back(std::make_pair(file1,file1.size()));
+        }
+        std::sort(files_and_respective_sizes.begin(), files_and_respective_sizes.end(),sortbysec);
+        std::reverse(files_and_respective_sizes.begin(), files_and_respective_sizes.end());
+        for (const std::pair<file, uintmax_t> &sorted_pair: files_and_respective_sizes) {
+            std::cout << "File: " << sorted_pair.first.name() << " size: " << sorted_pair.second << std::endl;
+        }
+    } else {
+        for (const file &file1: _files) {
+            std::cout << "File: " << file1.name() << " size: " << file1.size() << std::endl;
+        }
     }
 }
 
