@@ -7,6 +7,7 @@
 
 #include <boost/filesystem.hpp>
 #include <iostream>
+#include <string>
 //#include "directory.h"
 
 namespace fs=boost::filesystem;
@@ -18,11 +19,23 @@ public:
     file();
 
     file(fs::path _path);
-
+    std::string name()const;
     uintmax_t size() const;
 
     bool isFile();
 };
 
+class directory {
+private:
+    std::vector<file> _files;
+public:
+    directory();
+
+    directory(fs::path _path);
+
+    uintmax_t get_size();
+
+    void print_size_of_files();
+};
 
 #endif //PRINTSIZETREE_FILE_H

@@ -37,7 +37,7 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
 endif ()
 
 
-find_package(Boost COMPONENTS system thread filesystem REQUIRED)
+find_package(Boost COMPONENTS system thread filesystem  REQUIRED)
 include_directories(
         ${CMAKE_CURRENT_BINARY_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}
@@ -46,8 +46,8 @@ include_directories(
 
 
 # Now simply link against gtest or gtest_main as needed. Eg
-add_executable(printSizeTree src/main.cpp src/file/file.cpp src/file/file.h src/main.cpp src/file/directory.cpp src/file/directory.h)
-add_executable(printSizeTree_test tst/main.cpp src/file/file.cpp src/file/file.h src/file/directory.cpp src/file/directory.h)
+add_executable(printSizeTree src/main.cpp src/file/file.cpp src/file/file.h src/main.cpp)
+add_executable(printSizeTree_test tst/main.cpp src/file/file.cpp src/file/file.h)
 target_link_libraries(printSizeTree
         ${Boost_LIBRARIES}
         )
