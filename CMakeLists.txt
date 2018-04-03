@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.9)
 project(printSizeTree)
 
 set(CMAKE_CXX_STANDARD 14)
-add_library(stdc++fs UNKNOWN IMPORTED)
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror")
 
 # Download and unpack googletest at configure time
 configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
@@ -46,8 +46,8 @@ include_directories(
 
 
 # Now simply link against gtest or gtest_main as needed. Eg
-add_executable(printSizeTree src/main.cpp src/file/file.cpp src/file/file.h src/main.cpp src/file/files.cpp src/file/files.h)
-add_executable(printSizeTree_test tst/main.cpp src/file/file.cpp src/file/file.h src/file/files.cpp src/file/files.h)
+add_executable(printSizeTree src/main.cpp src/file/file.cpp src/file/file.h src/main.cpp src/file/directory.cpp src/file/directory.h)
+add_executable(printSizeTree_test tst/main.cpp src/file/file.cpp src/file/file.h src/file/directory.cpp src/file/directory.h)
 target_link_libraries(printSizeTree
         ${Boost_LIBRARIES}
         )
@@ -55,4 +55,4 @@ target_link_libraries(printSizeTree_test
         gtest_main
         ${Boost_LIBRARIES}
         )
-add_test(NAME example_test COMMAND printSizeTree)
+add_test(NAME example_test COMMAND printSizeTree_test)

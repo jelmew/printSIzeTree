@@ -12,12 +12,16 @@
 #include <iostream>
 
 namespace fs=boost::filesystem;
-class files {
+
+class directory {
 
 private:
-    std::vector<file> _files;
+    std::vector<file> _files ;
 public:
-    files();
+    directory();
+    directory(fs::path _path);
+    uintmax_t get_size();
+    void print_size_of_files();
 };
 
 
