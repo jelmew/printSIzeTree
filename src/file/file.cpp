@@ -45,7 +45,7 @@ uintmax_t directory::get_size() {
     return size;
 }
 
-void directory::print_size_of_files() {
+void directory::print_size_of_files(bool sorted) {
     for (const file &file1: _files) {
         std::cout << "File: " << file1.name() << " size: " << file1.size() << std::endl;
     }

@@ -35,7 +35,7 @@ public:
 
     uintmax_t get_size();
 
-    void print_size_of_files();
+    void print_size_of_files(bool sorted=false);
 };
 
 #endif //PRINTSIZETREE_FILE_H
