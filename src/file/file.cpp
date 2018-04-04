@@ -72,16 +72,19 @@ std::vector<std::pair<file, file_size_in_bytes>> directory::get_vector_sorted_by
 }
 
 directory::directory(fs::path _path) {
-    for (fs::directory_entry &p: fs::directory_iterator(_path)) {
-        _files.emplace_back(p.path());
+    try {
+        for (fs::directory_entry &p: fs::directory_iterator(_path)) {
+            _files.emplace_back(p.path());
+        }
+    } catch (const std::exception &e) {
+        std::vector<std::string> path_split = getSubPaths(_path.string());
+        std::cout << "Could not access directory: " << _path.string() << " due to " << e.what() << std::endl;
     }
+
 }
 
 void directory::print_file_size_formatted(file_size_in_bytes size_in_bytes, std::string file_path) {
-    std::vector<std::string> file_path_splitted;
-    boost::split(file_path_splitted, file_path, [](char c) {
-        return c == '/';
-    });
+    std::vector<std::string> file_path_splitted = getSubPaths(file_path);
 
     int number_of_digits = static_cast<int>(std::log10(size_in_bytes));
     if (number_of_digits >= 9) {
@@ -104,5 +107,13 @@ void directory::print_file_size_formatted(file_size_in_bytes size_in_bytes, std:
                   << file_path_splitted[file_path_splitted.size() - 1]
                   << std::endl;
     }
+}
+
+std::vector<std::string> directory::getSubPaths(const std::string &file_path) const {
+    std::vector<std::__cxx11::string> file_path_splitted;
+    boost::algorithm::split(file_path_splitted, file_path, [](char c) {
+        return c == '/';
+    });
+    return file_path_splitted;
 }
 
