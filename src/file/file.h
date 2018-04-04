@@ -10,6 +10,8 @@
 #include <string>
 #include <iomanip>
 #include <cmath>
+#include <boost/algorithm/string.hpp>
+
 namespace fs=boost::filesystem;
 typedef  uintmax_t file_size_in_bytes;
 class file {
