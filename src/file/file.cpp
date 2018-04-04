@@ -16,7 +16,7 @@ file::file(fs::path _path) : _path(_path) {
 
 }
 
-uintmax_t file::size() const {
+file_size_in_bytes file::size() const {
     if (fs::is_regular_file(_path)) {
         return fs::file_size(_path);
     }
@@ -37,8 +37,8 @@ directory::directory() {
     }
 }
 
-uintmax_t directory::get_size() {
-    uintmax_t size = 0;
+file_size_in_bytes directory::get_size() {
+    file_size_in_bytes size = 0;
     for (const file &file1: _files) {
         size = size + file1.size();
     }
@@ -47,21 +47,21 @@ uintmax_t directory::get_size() {
 
 // Driver function to sort the vector elements
 // by second element of pairs
-bool sortbysec(const std::pair<file, uintmax_t> &a,
-               const std::pair<file, uintmax_t> &b) {
+bool sortbysec(const std::pair<file, file_size_in_bytes> &a,
+               const std::pair<file, file_size_in_bytes> &b) {
     return (a.second < b.second);
 }
 
 void directory::print_size_of_files(bool sorted) {
     if (sorted) {
-        std::vector<std::pair<file, uintmax_t >> files_and_respective_sizes;
+        std::vector<std::pair<file, file_size_in_bytes >> files_and_respective_sizes;
         for (const file &file1: _files) {
-            files_and_respective_sizes.push_back(std::make_pair(file1,file1.size()));
+            files_and_respective_sizes.push_back(std::make_pair(file1, file1.size()));
         }
-        std::sort(files_and_respective_sizes.begin(), files_and_respective_sizes.end(),sortbysec);
+        std::sort(files_and_respective_sizes.begin(), files_and_respective_sizes.end(), sortbysec);
         std::reverse(files_and_respective_sizes.begin(), files_and_respective_sizes.end());
         for (const std::pair<file, uintmax_t> &sorted_pair: files_and_respective_sizes) {
-            std::cout << "File: " << sorted_pair.first.name() << " size: " << sorted_pair.second << std::endl;
+            print_file_size_formatted(sorted_pair.second, sorted_pair.first.name());
         }
     } else {
         for (const file &file1: _files) {
@@ -74,5 +74,11 @@ directory::directory(fs::path _path) {
     for (fs::directory_entry &p: fs::directory_iterator(_path)) {
         _files.emplace_back(p.path());
     }
+}
+
+void directory::print_file_size_formatted(file_size_in_bytes size_in_bytes, std::string file_path) {
+    int number_of_digits = static_cast<int>(std::log10(size_in_bytes));
+    std::cout << std::setw(0) << size_in_bytes << std::setw(20-number_of_digits) << "File: " << file_path
+              << std::endl;
 }
 

@@ -8,33 +8,29 @@
 #include <boost/filesystem.hpp>
 #include <iostream>
 #include <string>
-//#include "directory.h"
-
+#include <iomanip>
+#include <cmath>
 namespace fs=boost::filesystem;
-
+typedef  uintmax_t file_size_in_bytes;
 class file {
 private:
     fs::path _path;
 public:
     file();
-
     file(fs::path _path);
     std::string name()const;
     uintmax_t size() const;
-
     bool isFile();
 };
 
 class directory {
 private:
     std::vector<file> _files;
+    void print_file_size_formatted(file_size_in_bytes size_in_bytes, std::string file_path);
 public:
     directory();
-
     directory(fs::path _path);
-
-    uintmax_t get_size();
-
+    file_size_in_bytes get_size();
     void print_size_of_files(bool sorted=false);
 };
 
