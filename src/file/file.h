@@ -33,7 +33,9 @@ public:
     directory();
     directory(fs::path _path);
     file_size_in_bytes get_size();
-    void print_size_of_files(bool sorted=false);
+    void print_size_of_files();
+
+    std::vector<std::pair<file, file_size_in_bytes>> get_vector_sorted_by_file_size_descending() const;
 };
 
 #endif //PRINTSIZETREE_FILE_H

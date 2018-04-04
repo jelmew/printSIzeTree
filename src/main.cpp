@@ -8,6 +8,6 @@
 
 
 int main(int argc, char **argv) {
-    directory().print_size_of_files(true);
+    directory().print_size_of_files();
     return 0;
 };

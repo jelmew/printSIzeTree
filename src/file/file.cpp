@@ -47,27 +47,28 @@ file_size_in_bytes directory::get_size() {
 
 // Driver function to sort the vector elements
 // by second element of pairs
-bool sortbysec(const std::pair<file, file_size_in_bytes> &a,
-               const std::pair<file, file_size_in_bytes> &b) {
-    return (a.second < b.second);
+bool sort_by_file_size_in_bytes_second_field_of_pair(const std::pair<file, file_size_in_bytes> &a,
+                                                     const std::pair<file, file_size_in_bytes> &b) {
+    return (a.second > b.second);
 }
 
-void directory::print_size_of_files(bool sorted) {
-    if (sorted) {
-        std::vector<std::pair<file, file_size_in_bytes >> files_and_respective_sizes;
-        for (const file &file1: _files) {
-            files_and_respective_sizes.push_back(std::make_pair(file1, file1.size()));
-        }
-        std::sort(files_and_respective_sizes.begin(), files_and_respective_sizes.end(), sortbysec);
-        std::reverse(files_and_respective_sizes.begin(), files_and_respective_sizes.end());
-        for (const std::pair<file, uintmax_t> &sorted_pair: files_and_respective_sizes) {
-            print_file_size_formatted(sorted_pair.second, sorted_pair.first.name());
-        }
-    } else {
-        for (const file &file1: _files) {
-            std::cout << "File: " << file1.name() << " size: " << file1.size() << std::endl;
-        }
+void directory::print_size_of_files() {
+    //Get sorted vector
+    std::vector<std::pair<file, file_size_in_bytes>> files_and_respective_sizes = get_vector_sorted_by_file_size_descending();
+    for (const std::pair<file, uintmax_t> &sorted_pair: files_and_respective_sizes) {
+        print_file_size_formatted(sorted_pair.second, sorted_pair.first.name());
     }
+}
+
+std::vector<std::pair<file, file_size_in_bytes>> directory::get_vector_sorted_by_file_size_descending() const {
+    std::vector<std::pair<file, file_size_in_bytes >> files_and_respective_sizes;
+    //Make pairs to prevent asking size more than once, since this is an IO intensive operation
+    for (const file &file1: _files) {
+        files_and_respective_sizes.push_back(std::make_pair(file1, file1.size()));
+    }
+    sort(files_and_respective_sizes.begin(), files_and_respective_sizes.end(),
+         sort_by_file_size_in_bytes_second_field_of_pair);
+    return files_and_respective_sizes;
 }
 
 directory::directory(fs::path _path) {
@@ -83,8 +84,6 @@ void directory::print_file_size_formatted(file_size_in_bytes size_in_bytes, std:
     });
 
     int number_of_digits = static_cast<int>(std::log10(size_in_bytes));
-
-
     if (number_of_digits >= 9) {
         std::cout << std::setw(0) << round(float(size_in_bytes) / 10e8) << "GB" << std::setw(20 - number_of_digits + 9)
                   << "  "
