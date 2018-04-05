@@ -26,6 +26,10 @@ std::string file::name() const {
     return _path.string();
 }
 
+bool file::isFile() {
+    return false;
+}
+
 directory::directory() {
     //Get current path
     fs::path current_path = fs::current_path();
