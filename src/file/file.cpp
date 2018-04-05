@@ -4,9 +4,6 @@
 
 #include "file.h"
 
-bool file::isFile() {
-    return false;
-}
 
 file::file() {
 
@@ -112,7 +109,7 @@ void directory::print_file_size_formatted(file_size_in_bytes size_in_bytes, std:
 std::vector<std::string> directory::getSubPaths(const std::string &file_path) const {
     std::vector<std::__cxx11::string> file_path_splitted;
     boost::algorithm::split(file_path_splitted, file_path, [](char c) {
-        return c == '/';
+        return c == fs::path::preferred_separator;
     });
     return file_path_splitted;
 }
