@@ -12,25 +12,27 @@
 #include <cmath>
 #include <boost/algorithm/string.hpp>
 #include "File.h"
+#include "FormatterInterface.h"
 
 class Directory {
 private:
     std::vector<File> _files;
     std::vector<Directory> directories;
     fs::path _path;
+    FormatterInterface *formatterInterface;
 
     void print_file_size_formatted(file_size_in_bytes size_in_bytes, std::string file_path);
 
 public:
-    Directory();
+    Directory(FormatterInterface *formatterInterface);
 
-    Directory(fs::path _path);
+    Directory(fs::path _path, FormatterInterface *formatterInterface);
 
     file_size_in_bytes get_size() const;
 
     void print_size_tree();
 
-    std::vector<std::pair<std::string, file_size_in_bytes>> get_vector_sorted_by_file_size_descending() const;
+    std::vector<std::pair<std::string, file_size_in_bytes>> get_vector() const;
 
     std::vector<std::string> getSubPaths(const std::string &file_path) const;
 
