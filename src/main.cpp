@@ -5,9 +5,10 @@
 
 #include <iostream>
 #include <src/file/file.h>
+#include <src/file/Directory.h>
 
 
 int main(int argc, char **argv) {
-    directory().print_size_of_files();
+    Directory().print_size_tree();
     return 0;
 };

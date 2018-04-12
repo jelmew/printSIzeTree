@@ -25,19 +25,6 @@ public:
     bool isFile();
 };
 
-class directory {
-private:
-    std::vector<file> _files;
-    void print_file_size_formatted(file_size_in_bytes size_in_bytes, std::string file_path);
-public:
-    directory();
-    directory(fs::path _path);
-    file_size_in_bytes get_size();
-    void print_size_of_files();
 
-    std::vector<std::pair<file, file_size_in_bytes>> get_vector_sorted_by_file_size_descending() const;
-
-    std::vector<std::string> getSubPaths(const std::string &file_path) const;
-};
 
 #endif //PRINTSIZETREE_FILE_H

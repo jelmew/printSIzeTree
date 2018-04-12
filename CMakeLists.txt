@@ -46,7 +46,7 @@ include_directories(
 
 
 # Now simply link against gtest or gtest_main as needed. Eg
-add_executable(odu src/main.cpp src/file/file.cpp src/file/file.h src/main.cpp)
+add_executable(odu src/main.cpp src/file/file.cpp src/file/file.h src/main.cpp src/file/Directory.cpp src/file/Directory.h)
 add_executable(printSizeTree_test tst/main.cpp src/file/file.cpp src/file/file.h)
 target_link_libraries(odu
         ${Boost_LIBRARIES}
