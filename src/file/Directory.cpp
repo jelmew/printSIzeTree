@@ -11,7 +11,7 @@ Directory::Directory() {
     _path = fs::current_path();
     for (fs::directory_entry p: fs::directory_iterator(_path)) {
         if (fs::is_regular_file(p)) {
-            _files.push_back(file(p));
+            _files.push_back(File(p));
         } else if (fs::is_directory(p)) {
             directories.push_back(Directory(p));
         }
@@ -49,7 +49,7 @@ void Directory::print_size_tree() {
 std::vector<std::pair<string, file_size_in_bytes>> Directory::get_vector_sorted_by_file_size_descending() const {
     std::vector<std::pair<string, file_size_in_bytes >> file_or_directory_names_and_respective_sizes;
     //Make pairs to prevent asking size more than once, since this is an IO intensive operation
-    for (const file &file1: _files) {
+    for (const File &file1: _files) {
         file_or_directory_names_and_respective_sizes.push_back(std::make_pair(file1.name(), file1.size()));
     }
     for (auto &directory :directories) {
@@ -65,7 +65,7 @@ Directory::Directory(fs::path _path) {
     try {
         for (fs::directory_entry &p: fs::directory_iterator(_path)) {
             if (fs::is_regular_file(p)) {
-                _files.push_back(file(p));
+                _files.push_back(File(p));
             } else if (fs::is_directory(p)) {
                 directories.push_back(Directory(p));
             }

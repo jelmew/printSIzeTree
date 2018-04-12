@@ -2,12 +2,12 @@
 // Created by jelmer on 31-3-18.
 //
 
-#include "../../src/file/file.h"
+#include "src/file/File.h"
 #include "gtest/gtest.h"
 
 namespace {
     TEST(filePresentTest, returnsfalse) {
-        file f = file();
+        File f = File();
 
           ASSERT_FALSE(f.isFile());
 

@@ -11,11 +11,11 @@
 #include <iomanip>
 #include <cmath>
 #include <boost/algorithm/string.hpp>
-#include "file.h"
+#include "File.h"
 
 class Directory {
 private:
-    std::vector<file> _files;
+    std::vector<File> _files;
     std::vector<Directory> directories;
     fs::path _path;
 

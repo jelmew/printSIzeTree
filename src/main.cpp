@@ -4,7 +4,7 @@
 
 
 #include <iostream>
-#include <src/file/file.h>
+#include <src/file/File.h>
 #include <src/file/Directory.h>
 
 

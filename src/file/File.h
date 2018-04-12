@@ -11,15 +11,16 @@
 #include <iomanip>
 #include <cmath>
 #include <boost/algorithm/string.hpp>
+#include <sys/stat.h>
 
 namespace fs=boost::filesystem;
 typedef  uintmax_t file_size_in_bytes;
-class file {
+class File {
 private:
     fs::path _path;
 public:
-    file();
-    file(fs::path _path);
+    File();
+    File(fs::path _path);
     std::string name()const;
     uintmax_t size() const;
     bool isFile();
