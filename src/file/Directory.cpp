@@ -12,8 +12,7 @@ Directory::Directory() {
     for (fs::directory_entry p: fs::directory_iterator(_path)) {
         if (fs::is_regular_file(p)) {
             _files.push_back(file(p));
-        }
-        if (fs::is_directory(p)) {
+        } else if (fs::is_directory(p)) {
             directories.push_back(Directory(p));
         }
     }
@@ -25,6 +24,7 @@ file_size_in_bytes Directory::get_size() const {
         size = size + file1.size();
     }
     for (const auto &directory: directories) {
+        size += 4000;
         size += directory.get_size();
     }
 
@@ -61,10 +61,14 @@ std::vector<std::pair<string, file_size_in_bytes>> Directory::get_vector_sorted_
 }
 
 Directory::Directory(fs::path _path) {
-    this->_path=_path;
+    this->_path = _path;
     try {
         for (fs::directory_entry &p: fs::directory_iterator(_path)) {
-            _files.emplace_back(p.path());
+            if (fs::is_regular_file(p)) {
+                _files.push_back(file(p));
+            } else if (fs::is_directory(p)) {
+                directories.push_back(Directory(p));
+            }
         }
     } catch (const std::exception &e) {
         std::vector<string> path_split = getSubPaths(_path.string());
