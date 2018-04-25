@@ -16,25 +16,26 @@
 
 class Directory {
 private:
+
+
     std::vector<File> _files;
     std::vector<Directory> directories;
     fs::path _path;
     FormatterInterface *formatterInterface;
-
-    void print_file_size_formatted(file_size_in_bytes size_in_bytes, std::string file_path);
+    file_size_in_bytes size_on_disk;
 
 public:
     Directory(FormatterInterface *formatterInterface);
 
-    Directory(fs::path _path, FormatterInterface *formatterInterface);
+    explicit Directory(boost::filesystem::path _path);
+
+    //Directory(fs::path _path, FormatterInterface *formatterInterface);
 
     file_size_in_bytes get_size() const;
 
     void print_size_tree();
 
     std::vector<std::pair<std::string, file_size_in_bytes>> get_vector() const;
-
-    std::vector<std::string> getSubPaths(const std::string &file_path) const;
 
     std::string name() const;
 };
