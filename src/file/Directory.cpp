@@ -7,16 +7,16 @@
 using std::string;
 
 Directory::Directory(FormatterInterface *formatterInterface) {
-    size_on_disk=0;
+    size_on_disk=4000;
     this->formatterInterface = formatterInterface;
     _path = fs::current_path();
-    for (fs::directory_entry p: fs::directory_iterator(_path)) {
+    for (const fs::directory_entry &p: fs::directory_iterator(_path)) {
         if (fs::is_regular_file(p)) {
             const File &file = File(p.path());
             size_on_disk += file.size();
             _files.push_back(file);
         } else if (fs::is_directory(p)) {
-            const Directory &directory = Directory(p.path());
+            Directory directory = Directory(p.path());
             size_on_disk += directory.get_size();
             directories.push_back(directory);
         }
@@ -48,7 +48,8 @@ std::vector<std::pair<string, file_size_in_bytes>> Directory::get_vector() const
 
 
 Directory::Directory(boost::filesystem::path _path) {
-    this->size_on_disk=0;
+    //The sie of an empty directory on disk
+    this->size_on_disk=4000;
     this->formatterInterface = nullptr;
     this->_path = _path;
     try {

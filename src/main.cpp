@@ -10,7 +10,7 @@
 
 
 int main(int argc, char **argv) {
-    FormatterInterfaceImpl *anInterface = new FormatterInterfaceImpl();
+    auto *anInterface = new FormatterInterfaceImpl();
     Directory(anInterface).print_size_tree();
 
     delete(anInterface);
