@@ -53,7 +53,7 @@ Directory::Directory(boost::filesystem::path _path) {
     this->formatterInterface = nullptr;
     this->_path = _path;
     try {
-        for (fs::directory_entry p: fs::directory_iterator(_path)) {
+        for (const fs::directory_entry &p: fs::directory_iterator(_path)) {
             if (fs::is_regular_file(p)) {
                 const File &file = File(p.path());
                 size_on_disk += file.size();
